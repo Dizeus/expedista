@@ -22,6 +22,7 @@ JSON=$(cat <<-END
 END
 )
 
+mkdir -p ./docker/pgAdmin 
 echo "$JSON" > ./docker/pgAdmin/servers.json
 
 docker compose up
