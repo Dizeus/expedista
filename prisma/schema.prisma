@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource postgres {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id          String         @id
+  name        String
+  surname     String
+  email       String        
+  password    String
+  avatar      String?
+  user_groups user_group[]
+  backpacks backpack[]
+}
+
+model group {
+  id          String        @id
+  name    String
+  user_groups user_group[]
+  backpacks backpack[]
+}
+
+model user_group {
+  id      String @id
+  group    group  @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  group_id String
+  user    user  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String
+}
+
+model backpack {
+  id      String @id
+  group    group  @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  group_id String
+  user    user  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String
+  size Int
+  items item[]
+}
+
+
+model item {
+  id      String @id
+  name String
+  weight Float
+  volume Int?
+  quantity Int
+  type String
+  backpack    backpack  @relation(fields: [backpack_id], references: [id], onDelete: Cascade)
+  backpack_id String
+}

@@ -1,13 +1,17 @@
 {
   "name": "expedista",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Web app for planing hike",
+  "author": "Kharchuk Illia",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "migrate": "prisma migrate dev --name init",
+    "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -24,7 +28,9 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "prisma": "^5.5.2",
+    "@prisma/client": "^5.5.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

@@ -58,3 +58,6 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Server init
 docker/pgAdmin/servers.json
+
+# Migrations
+prisma/migrations
