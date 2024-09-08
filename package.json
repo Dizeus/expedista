@@ -6,11 +6,12 @@
   "private": true,
   "license": "UNLICENSED",
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeds/seed.ts"
   },
   "scripts": {
     "build": "nest build",
     "migrate": "prisma migrate dev --name init",
+    "seed": "npx prisma db push --force-reset && npx prisma db seed",
     "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -27,12 +28,15 @@
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
-    "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1",
+    "@prisma/client": "^5.5.2",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "prisma": "^5.5.2",
-    "@prisma/client": "^5.5.2"
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.0.0",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",

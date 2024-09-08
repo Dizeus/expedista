@@ -59,9 +59,13 @@ cleanup() {
 # Trap EXIT, SIGINT (Ctrl+C), SIGTERM  to call cleanup
 trap cleanup EXIT SIGINT SIGTERM
 
-# Run migrations
-echo -e "${GREEN}Database is ready! Running migrations... ${NC}"
-npm run migrate
+# Check if migrations exist
+if [ -z "$(ls -A prisma/migrations 2>/dev/null)" ]; then
+    echo -e "${YELLOW}No migrations found. Running migrations...${NC}"
+    npm run migrate
+else
+    echo -e "${GREEN}Migrations already exist. Skipping migration step...${NC}"
+fi
 
 # Wait indefinitely, so the script stays running to handle the Ctrl+C
 while true; do
