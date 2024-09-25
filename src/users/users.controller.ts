@@ -20,14 +20,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  //@Get()
-  //getAll(
-  //  @Query('page') page: number = 1,
-  //  @Query('count') count: number = 10,
-  //  @Query('query') query: string = '',
-  //) {
-  //  return this.usersService.findAll(+page, +count, query);
-  //}
+  @Get()
+  getAll(
+    @Query('page') page: number = 1,
+    @Query('count') count: number = 10,
+    @Query('query') query: string = '',
+  ) {
+    return this.usersService.findAll(+page, +count, query);
+  }
 
   //@Put('/avatar')
   //@UseGuards(JwtAuthGuard)

@@ -6,22 +6,31 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
-import { getTokenUser } from '../helpers/get-token-user/get-token-user';
+import { getToken } from '../helpers/get-token/get-token';
+import { LocalizationService } from 'src/localization/localization.service';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private localizationService: LocalizationService,
+  ) {}
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
+    const unauthorizedMessage = this.localizationService.translate(
+      'translation.error.unauthorized',
+    );
     try {
-      getTokenUser(req, (t) => this.jwtService.verify(t));
+      const token = getToken(req.headers.authorization, unauthorizedMessage);
+      const user = this.jwtService.verify(token);
+      req.user = user;
       return true;
     } catch (e) {
       throw new UnauthorizedException({
-        message: `Unathorized user`,
+        message: unauthorizedMessage,
       });
     }
   }

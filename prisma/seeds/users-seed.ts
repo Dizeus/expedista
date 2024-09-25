@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { USER_ROLE } from 'src/assets/constants/roles';
+import { USER_ROLE } from '../../src/assets/constants/roles';
 
 export default async function createUsers() {
   const users = [];

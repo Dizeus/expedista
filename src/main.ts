@@ -12,6 +12,8 @@ async function bootstrap() {
     origin: 'http://localhost:4200',
     credentials: true,
   });
+  console.log(process.env.NODE_ENV)
+  console.log(process.env.DATABASE_URL);
   const loacalization = app.get<LocalizationService>(LocalizationService);
   await app.listen(PORT, () =>
     console.log(`Server started on port = ${PORT}`),

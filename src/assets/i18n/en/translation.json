@@ -8,7 +8,9 @@
     "notFound": "{0.object} with id: {1.param} wasn't found",
     "savingFile": "Error of saving file",
     "emailExist": "User with email: {email} already exist",
-    "auth": "Incorrect { user ? email : password }"
+    "auth": "Incorrect { user ? email : password }",
+    "unauthorized": "Unathorized user",
+    "forbidden": "Forbidden"
   },
   "objects": {
     "user": "User"

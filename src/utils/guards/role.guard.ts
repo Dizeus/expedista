@@ -9,13 +9,15 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { ROLE_KEY, USER_ROLE } from 'src/assets/constants/roles';
-import { getTokenUser } from '../helpers/get-token-user/get-token-user';
+import { getToken } from '../helpers/get-token/get-token';
+import { LocalizationService } from 'src/localization/localization.service';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private reflector: Reflector,
+    private localizationService: LocalizationService,
   ) {}
 
   canActivate(
@@ -28,12 +30,20 @@ export class RoleGuard implements CanActivate {
     if (requiredRole === USER_ROLE) {
       return true;
     }
+    const unauthorizedMessage = this.localizationService.translate(
+      'translation.error.unauthorized',
+    );
     const req = context.switchToHttp().getRequest();
     try {
-      const user = getTokenUser(req, (t) => this.jwtService.verify(t));
+      const token = getToken(req.headers.authorization, unauthorizedMessage);
+      const user = this.jwtService.verify(token);
+      req.user = user;
       return user.role === requiredRole;
     } catch (e) {
-      throw new HttpException(`Forbidden`, HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        this.localizationService.translate('translation.error.forbidden'),
+        HttpStatus.FORBIDDEN,
+      );
     }
   }
 }

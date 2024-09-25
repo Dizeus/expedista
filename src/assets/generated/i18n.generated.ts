@@ -16,6 +16,8 @@ export type I18nTranslations = {
             "savingFile": string;
             "emailExist": string;
             "auth": string;
+            "unauthorized": string;
+            "forbidden": string;
         };
         "objects": {
             "user": string;
