@@ -11,6 +11,20 @@ export type I18nTranslations = {
             "isEmail": string;
             "isString": string;
         };
+        "error": {
+            "notFound": string;
+            "savingFile": string;
+            "emailExist": string;
+            "auth": string;
+        };
+        "objects": {
+            "user": string;
+        };
+        "actions": {
+            "created": string;
+            "deleted": string;
+            "updated": string;
+        };
     };
 };
 /* prettier-ignore */

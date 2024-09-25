@@ -43,6 +43,8 @@ echo -e "${GREEN}servers.json generates successful!${NC}"
 echo -e "${BLUE}Running docker containers...${NC}"
 docker compose up -d
 
+echo -e "${GREEN}${DATABASE_URL}{NC}"
+
 # Wait for the database to be ready
 until [ "`docker inspect -f {{.State.Running}} pgadmin4_container`"=="true" ]; do
   echo -e "${YELLOW}Waiting for the database to be ready...${NC}"
@@ -66,6 +68,9 @@ if [ -z "$(ls -A prisma/migrations 2>/dev/null)" ]; then
 else
     echo -e "${GREEN}Migrations already exist. Skipping migration step...${NC}"
 fi
+
+
+npm run start:dev
 
 # Wait indefinitely, so the script stays running to handle the Ctrl+C
 while true; do

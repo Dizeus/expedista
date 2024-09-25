@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { USER_ROLE } from 'src/assets/constants/roles';
 const prisma = new PrismaClient();
 
 export default async function createTestUser() {
@@ -8,8 +9,8 @@ export default async function createTestUser() {
     data: {
       id: 'testUserId',
       email: 'expedistauser@gmail.com',
-      name: 'Test',
-      surname: 'user',
+      fullname: 'Test User',
+      role: USER_ROLE,
       password: hashed,
       avatar: null,
     },

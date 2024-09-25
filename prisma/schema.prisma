@@ -9,10 +9,10 @@ datasource postgres {
 
 model user {
   id          String         @id
-  name        String
-  surname     String
+  fullname    String
   email       String        
   password    String
+  role        String
   avatar      String?
   user_groups user_group[]
   backpacks backpack[]

@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { USER_ROLE } from 'src/assets/constants/roles';
 
 export default async function createUsers() {
   const users = [];
@@ -6,9 +7,9 @@ export default async function createUsers() {
     users.push({
       id: faker.string.uuid(),
       email: faker.internet.email(),
-      name: faker.person.firstName(),
-      surname: faker.person.lastName(),
+      fullname: faker.person.fullName(),
       password: faker.internet.password(),
+      role: USER_ROLE,
       avatar: null,
     });
   }

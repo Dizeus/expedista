@@ -1,0 +1,21 @@
+{
+  "validation": {
+    "length": "Length of {field} should be greater than {minLength}{maxLength ? 'and less than {maxLength}' : ''}",
+    "isEmail": "Incorrect Email",
+    "isString": "{field} must be a string"
+  },
+  "error": {
+    "notFound": "{0.object} with id: {1.param} wasn't found",
+    "savingFile": "Error of saving file",
+    "emailExist": "User with email: {email} already exist",
+    "auth": "Incorrect { user ? email : password }"
+  },
+  "objects": {
+    "user": "User"
+  },
+  "actions": {
+    "created": "{object} successfully created",
+    "deleted": "{object} successfully deleted",
+    "updated": "{object} successfully deleted"
+  }
+}
