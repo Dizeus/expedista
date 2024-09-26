@@ -6,6 +6,7 @@ import { LocalizationService } from '../localization/localization.service';
 import { user } from '@prisma/client';
 import { LocalizationObjects } from 'src/assets/types/enums/LocalizationObjects';
 import { LocalizationAction } from 'src/assets/types/enums/LocalizationAction';
+import { IUser } from 'src/assets/types/IUser';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +15,7 @@ export class UsersService {
     private localizationService: LocalizationService,
   ) {}
 
-  async create(dto: CreateUserDto): Promise<user> {
+  async create(dto: CreateUserDto): Promise<IUser> {
     const candidateEmail = await this.usersRepository.getUserByEmail(dto.email);
 
     if (candidateEmail) {
@@ -41,7 +42,7 @@ export class UsersService {
     return { users, total };
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<IUser> {
     const user = await this.usersRepository.findOne(id);
 
     if (!user) {
@@ -63,5 +64,9 @@ export class UsersService {
         LocalizationObjects.USER,
       ),
     };
+  }
+
+  getUserByEmail(email: string): Promise<user | null> {
+    return this.usersRepository.getUserByEmail(email);
   }
 }

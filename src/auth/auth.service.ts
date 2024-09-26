@@ -8,18 +8,16 @@ import { CreateUserDto } from "../users/dto/create-user.dto";
 import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
-import { UsersRepository } from "../users/users.repository";
 import { LocalizationService } from "../localization/localization.service";
-import { user } from "@prisma/client";
 import { IUserToken } from "src/assets/types/IUserToken";
+import { IUser } from "src/assets/types/IUser";
+import { ITokenPayload } from "src/assets/types/ITokenPayload";
 
 @Injectable()
 export class AuthService {
-
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
-    private userRepository: UsersRepository,
     private localizationService: LocalizationService,
   ) {}
 
@@ -38,22 +36,20 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  async generateToken(user: user): Promise<IUserToken> {
-    const payload = {
-      email: user.email,
+  async generateToken(user: IUser): Promise<IUserToken> {
+    const payload: ITokenPayload = {
       id: user.id,
-      fullname: user.fullname,
-      role: user.role
+      email: user.email,
+      role: user.role,
     };
-    const { password, ...clientUser } = user;
     return {
       token: this.jwtService.sign(payload),
-      user: clientUser,
+      user,
     };
   }
 
-  async validateUser(loginDto: LoginAuthDto): Promise<user> {
-    const user = await this.userRepository.getUserByEmail(loginDto.email);
+  async validateUser(loginDto: LoginAuthDto): Promise<IUser> {
+    const user = await this.userService.getUserByEmail(loginDto.email);
     const isPassword =
       user && (await bcrypt.compare(loginDto.password, user.password));
 
@@ -65,7 +61,7 @@ export class AuthService {
         HttpStatus.UNAUTHORIZED,
       );
     }
-
-    return user;
+    const {password, ...clientUser} = user
+    return clientUser;
   }
 }

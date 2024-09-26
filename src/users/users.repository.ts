@@ -14,9 +14,16 @@ export class UsersRepository {
         id: uuidv4(),
         email: dto.email,
         password: hashedPassword,
-        fullname: dto.fullanme,
+        fullname: dto.fullname,
         role: USER_ROLE,
         avatar: null,
+      },
+      select: {
+        id: true,
+        email: true,
+        fullname: true,
+        role: true,
+        avatar: true,
       },
     });
   }
@@ -55,6 +62,13 @@ export class UsersRepository {
   findOne(id: string) {
     return this.prismaService.user.findFirst({
       where: { id },
+      select: {
+        id: true,
+        email: true,
+        fullname: true,
+        role: true,
+        avatar: true
+      },
     });
   }
 

@@ -28,7 +28,7 @@ export class CreateUserDto {
       { field: 'Name', minLength: USER_FULLNAME_MIN_LENGTH },
     ),
   })
-  readonly fullanme: string;
+  readonly fullname: string;
   @IsString({
     message: i18nValidationMessage<I18nTranslations>(
       'translation.validation.isString',

@@ -1,6 +1,6 @@
-import {IUserInfo} from 'src/assets/types/IUserInfo';
+import { ITokenPayload } from './ITokenPayload';
 
 export interface IUserToken {
-  user: IUserInfo;
+  user: ITokenPayload;
   token: string;
 }

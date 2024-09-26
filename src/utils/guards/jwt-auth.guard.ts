@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { getToken } from '../helpers/get-token/get-token';
 import { LocalizationService } from 'src/localization/localization.service';
+import { ITokenPayload } from 'src/assets/types/ITokenPayload';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -25,7 +26,7 @@ export class JwtAuthGuard implements CanActivate {
     );
     try {
       const token = getToken(req.headers.authorization, unauthorizedMessage);
-      const user = this.jwtService.verify(token);
+      const user: ITokenPayload = this.jwtService.verify(token);
       req.user = user;
       return true;
     } catch (e) {

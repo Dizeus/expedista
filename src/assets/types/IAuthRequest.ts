@@ -1,8 +1,5 @@
+import { ITokenPayload } from "./ITokenPayload";
+
 export interface IAuthRequest extends Request {
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-  };
+  user: ITokenPayload;
 }

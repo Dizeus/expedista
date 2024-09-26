@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { ROLE_KEY, USER_ROLE } from 'src/assets/constants/roles';
 import { getToken } from '../helpers/get-token/get-token';
 import { LocalizationService } from 'src/localization/localization.service';
+import { ITokenPayload } from 'src/assets/types/ITokenPayload';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -36,7 +37,7 @@ export class RoleGuard implements CanActivate {
     const req = context.switchToHttp().getRequest();
     try {
       const token = getToken(req.headers.authorization, unauthorizedMessage);
-      const user = this.jwtService.verify(token);
+      const user: ITokenPayload = this.jwtService.verify(token);
       req.user = user;
       return user.role === requiredRole;
     } catch (e) {
