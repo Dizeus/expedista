@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from '../auth.service';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LocalizationService } from 'src/localization/localization.service';
-import { mockUsersService } from 'src/assets/mocks/services/mock-user-service';
+import { mockUsersService } from 'test/mocks/services/mock-user-service';
 import * as bcrypt from 'bcrypt';
-import { mockUser } from 'src/assets/mocks/mock-user';
-import { mockDtoLogin } from 'src/assets/mocks/mock-dto-login';
+import { mockUser } from 'test/mocks/mock-user';
+import { mockDtoLogin } from 'test/mocks/dto/mock-dto-login';
 import { HttpException } from '@nestjs/common';
-import mockClientUser from 'src/assets/mocks/mock-client-user';
-import { mockDtoRegistration } from 'src/assets/mocks/mock-dto-registration';
-import { mockLocalizationService } from 'src/assets/mocks/services/mock-localization-service';
+import mockClientUser from 'test/mocks/mock-client-user';
+import { mockDtoRegistration } from 'test/mocks/dto/mock-dto-registration';
+import { mockLocalizationService } from 'test/mocks/services/mock-localization-service';
+import { AuthService } from 'src/auth/auth.service';
 
 const mockJwtService = {
   sign: jest.fn(() => ''),

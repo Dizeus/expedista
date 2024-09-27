@@ -1,5 +1,5 @@
 import { user } from "@prisma/client";
-import { USER_ROLE } from "../constants/roles";
+import { USER_ROLE } from "src/assets/constants/roles";
 
 export const mockUser: user = {
   id: '124Id',

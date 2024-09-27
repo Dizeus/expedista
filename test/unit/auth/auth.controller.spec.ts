@@ -1,12 +1,12 @@
-import { AuthController } from '../auth.controller';
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthService } from '../auth.service';
 import { JwtAuthGuard } from 'src/utils/guards/jwt-auth.guard';
-import { mockAuthRequest } from 'src/assets/mocks/mock-auth-request';
-import { mockJwtAuthGuard } from 'src/assets/mocks/mock-jwt-auth-guard';
-import { mockDtoLogin } from 'src/assets/mocks/mock-dto-login';
-import { mockDtoRegistration } from 'src/assets/mocks/mock-dto-registration';
+import { mockAuthRequest } from 'test/mocks/mock-auth-request';
+import { mockJwtAuthGuard } from 'test/mocks/guards/mock-jwt-auth-guard';
+import { mockDtoLogin } from 'test/mocks/dto/mock-dto-login';
+import { mockDtoRegistration } from 'test/mocks/dto/mock-dto-registration';
+import { AuthController } from 'src/auth/auth.controller';
+import { AuthService } from 'src/auth/auth.service';
 
 const mockAuthService = {
   refresh: jest.fn(),
