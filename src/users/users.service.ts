@@ -7,20 +7,24 @@ import { user } from '@prisma/client';
 import { LocalizationObjects } from 'src/assets/types/enums/LocalizationObjects';
 import { LocalizationAction } from 'src/assets/types/enums/LocalizationAction';
 import { IUser } from 'src/assets/types/IUser';
+import * as path from 'path';
+import { FilesService } from 'src/files/files.service';
+import { IResponseMessage } from 'src/assets/types/IResponseMessage';
 
 @Injectable()
 export class UsersService {
   constructor(
     private usersRepository: UsersRepository,
+    private fileService: FilesService,
     private localizationService: LocalizationService,
   ) {}
 
   async create(dto: CreateUserDto): Promise<IUser> {
-    const candidateEmail = await this.usersRepository.getUserByEmail(dto.email);
+    const candidateEmail = await this.usersRepository.findOneByEmail(dto.email);
 
     if (candidateEmail) {
       throw new HttpException(
-        this.localizationService.translate('translation', [
+        this.localizationService.translate('translation.error.emailExist', [
           { type: 'email' },
           { value: dto.email },
         ]),
@@ -55,7 +59,7 @@ export class UsersService {
     return user;
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<IResponseMessage> {
     await this.findOne(id);
     await this.usersRepository.remove(id);
     return {
@@ -66,7 +70,19 @@ export class UsersService {
     };
   }
 
-  getUserByEmail(email: string): Promise<user | null> {
-    return this.usersRepository.getUserByEmail(email);
+  findOneByEmail(email: string): Promise<user | null> {
+    return this.usersRepository.findOneByEmail(email);
+  }
+
+  setAvatar(image: Express.Multer.File, id: string): Promise<IUser> {
+    const filePath = path.resolve(
+      __dirname,
+      '..',
+      '..',
+      'static',
+      'avatars',
+    );
+    const filename = this.fileService.createFile(image, filePath);
+    return this.usersRepository.setAvatar(filename, id);
   }
 }

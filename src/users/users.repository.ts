@@ -1,8 +1,10 @@
-import { Injectable } from "@nestjs/common";
-import { v4 as uuidv4 } from "uuid";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { PrismaService } from "src/prisma/prisma.service";
-import { USER_ROLE } from "src/assets/constants/roles";
+import { Injectable } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
+import { CreateUserDto } from './dto/create-user.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { USER_ROLE } from 'src/assets/constants/roles';
+import { IUser } from 'src/assets/types/IUser';
+import { clientUserSelection } from 'src/utils/selections/client-user-selection';
 
 @Injectable()
 export class UsersRepository {
@@ -18,13 +20,7 @@ export class UsersRepository {
         role: USER_ROLE,
         avatar: null,
       },
-      select: {
-        id: true,
-        email: true,
-        fullname: true,
-        role: true,
-        avatar: true,
-      },
+      select: clientUserSelection,
     });
   }
 
@@ -35,7 +31,7 @@ export class UsersRepository {
       where: {
         fullname: {
           contains: query,
-          mode: "insensitive",
+          mode: 'insensitive',
         },
       },
     });
@@ -52,8 +48,7 @@ export class UsersRepository {
     });
   }
 
-
-  getUserByEmail(email: string) {
+  findOneByEmail(email: string) {
     return this.prismaService.user.findFirst({
       where: { email },
     });
@@ -62,13 +57,7 @@ export class UsersRepository {
   findOne(id: string) {
     return this.prismaService.user.findFirst({
       where: { id },
-      select: {
-        id: true,
-        email: true,
-        fullname: true,
-        role: true,
-        avatar: true
-      },
+      select: clientUserSelection,
     });
   }
 
@@ -82,8 +71,9 @@ export class UsersRepository {
     return this.prismaService.user.update({
       where: { id },
       data: {
-        avatar: "avatars/" + filename,
+        avatar: 'avatars/' + filename,
       },
+      select: clientUserSelection,
     });
   }
 }

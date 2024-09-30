@@ -9,9 +9,10 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-     "paths": {
-      "src/*": ["src/*"]
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "test/*": ["test/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
@@ -19,6 +20,10 @@
     "noImplicitAny": true,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true
-  }
+    "noFallthroughCasesInSwitch": true,
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+, "test/unit/users/users.service.spec.ts", "test/unit/users/users.repository.spec.ts"  ]
 }

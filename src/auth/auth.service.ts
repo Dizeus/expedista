@@ -1,17 +1,13 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from "@nestjs/common";
-import { LoginAuthDto } from "./dto/login-auth.dto";
-import { CreateUserDto } from "../users/dto/create-user.dto";
-import { UsersService } from "../users/users.service";
-import { JwtService } from "@nestjs/jwt";
-import * as bcrypt from "bcrypt";
-import { LocalizationService } from "../localization/localization.service";
-import { IUserToken } from "src/assets/types/IUserToken";
-import { IUser } from "src/assets/types/IUser";
-import { ITokenPayload } from "src/assets/types/ITokenPayload";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { LoginAuthDto } from './dto/login-auth.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UsersService } from '../users/users.service';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { LocalizationService } from '../localization/localization.service';
+import { IUserToken } from 'src/assets/types/IUserToken';
+import { IUser } from 'src/assets/types/IUser';
+import { ITokenPayload } from 'src/assets/types/ITokenPayload';
 
 @Injectable()
 export class AuthService {
@@ -49,7 +45,7 @@ export class AuthService {
   }
 
   async validateUser(loginDto: LoginAuthDto): Promise<IUser> {
-    const user = await this.userService.getUserByEmail(loginDto.email);
+    const user = await this.userService.findOneByEmail(loginDto.email);
     const isPassword =
       user && (await bcrypt.compare(loginDto.password, user.password));
 
@@ -61,7 +57,7 @@ export class AuthService {
         HttpStatus.UNAUTHORIZED,
       );
     }
-    const {password, ...clientUser} = user
+    const { password, ...clientUser } = user;
     return clientUser;
   }
 }

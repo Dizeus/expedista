@@ -16,6 +16,6 @@ import { FilesModule } from "src/files/files.module";
   ],
   controllers: [UsersController],
   providers: [UsersService, UsersRepository],
-  exports: [UsersService, UsersRepository],
+  exports: [UsersService],
 })
 export class UsersModule {}

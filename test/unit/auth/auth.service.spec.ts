@@ -52,9 +52,9 @@ describe('AuthService', () => {
   it('validateUser - should return user if the credentials are correct', async () => {
     const mockBcrypt = jest.spyOn(bcrypt, 'compare');
     mockBcrypt.mockImplementation(() => true);
-    mockUsersService.getUserByEmail.mockResolvedValue(mockUser);
+    mockUsersService.findOneByEmail.mockResolvedValue(mockUser);
     expect(await service.validateUser(mockDtoLogin)).toEqual(mockClientUser);
-    expect(mockUsersService.getUserByEmail).toHaveBeenCalledWith(
+    expect(mockUsersService.findOneByEmail).toHaveBeenCalledWith(
       mockDtoLogin.email,
     );
     expect(mockBcrypt).toHaveBeenCalledWith(
@@ -71,7 +71,7 @@ describe('AuthService', () => {
       fail('Expected exception to be thrown, but none was thrown.');
     } catch (error) {
       expect(error).toBeInstanceOf(HttpException);
-      expect(mockUsersService.getUserByEmail).toHaveBeenCalledWith(
+      expect(mockUsersService.findOneByEmail).toHaveBeenCalledWith(
         mockDtoLogin.email,
       );
       expect(mockLocalizationService.translate).toHaveBeenCalledWith(
@@ -89,7 +89,7 @@ describe('AuthService', () => {
   it('validateUser - should throw error if email is wrong', async () => {
     const mockBcrypt = jest.spyOn(bcrypt, 'compare');
     mockBcrypt.mockImplementation(() => true);
-    mockUsersService.getUserByEmail.mockResolvedValue(null);
+    mockUsersService.findOneByEmail.mockResolvedValue(null);
     try {
       expect(await service.validateUser(mockDtoLogin)).toEqual(mockUser);
       fail('Expected exception to be thrown, but none was thrown.');
@@ -99,7 +99,7 @@ describe('AuthService', () => {
         'translation.error.auth',
         [{ user: true }],
       );
-      expect(mockUsersService.getUserByEmail).toHaveBeenCalledWith(
+      expect(mockUsersService.findOneByEmail).toHaveBeenCalledWith(
         mockUser.email,
       );
       expect(mockBcrypt).not.toHaveBeenCalled();
