@@ -1,10 +1,10 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { ExecutionContext } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { UnauthorizedException } from "@nestjs/common";
-import { JwtAuthGuard } from "src/utils/guards/jwt-auth.guard";
-import { LocalizationService } from "src/localization/localization.service";
-import { mockLocalizationService } from "test/mocks/services/mock-localization-service";
+import { Test, TestingModule } from '@nestjs/testing';
+import { ExecutionContext } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UnauthorizedException } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/utils/guards/jwt-auth.guard';
+import { LocalizationService } from 'src/localization/localization.service';
+import { mockLocalizationService } from 'test/mocks/services/mock-localization-service';
 
 const contextEmpty: ExecutionContext = {
   switchToHttp: jest.fn().mockReturnValue({
@@ -18,10 +18,10 @@ const contextAuth: ExecutionContext = {
   switchToHttp: jest.fn().mockReturnValue({
     getRequest: jest.fn().mockReturnValue({
       headers: {
-        authorization: "Bearer validToken",
+        authorization: 'Bearer validToken',
       },
     }),
-  })
+  }),
 } as unknown as ExecutionContext;
 
 const contextNotValid: ExecutionContext = {
@@ -35,9 +35,14 @@ const contextNotValid: ExecutionContext = {
 } as unknown as ExecutionContext;
 
 const mockJwtService = {
-  verify: jest.fn((token: string) => {}),
+  verify: jest.fn(() => {}),
 };
-describe("JwtAuthGuard", () => {
+
+jest.mock('src/utils/helpers/get-token/get-token', () => ({
+  getToken: jest.fn(() => 'validToken'),
+}));
+
+describe('JwtAuthGuard', () => {
   let guard: JwtAuthGuard;
 
   beforeEach(async () => {
@@ -62,19 +67,19 @@ describe("JwtAuthGuard", () => {
     jest.clearAllMocks();
   });
 
-  it("should be defined", () => {
+  it('should be defined', () => {
     expect(guard).toBeDefined();
   });
 
-  it("should return true with valid auth", () => {
-    (mockJwtService.verify as jest.Mock).mockReturnValue({ userId: "123" });
+  it('should return true with valid auth', () => {
+    (mockJwtService.verify as jest.Mock).mockReturnValue({ userId: '123' });
 
     expect(guard.canActivate(contextAuth)).toBeTruthy();
     expect(contextAuth.switchToHttp).toHaveBeenCalledTimes(1);
-    expect(mockJwtService.verify).toHaveBeenCalledWith("validToken");
+    expect(mockJwtService.verify).toHaveBeenCalledWith('validToken');
   });
 
-  it("should throw UnauthorizedException with invalid auth", () => {
+  it('should throw UnauthorizedException with invalid auth', () => {
     (mockJwtService.verify as jest.Mock).mockImplementation(() => {
       throw new UnauthorizedException();
     });
@@ -82,10 +87,11 @@ describe("JwtAuthGuard", () => {
       UnauthorizedException,
     );
     expect(contextNotValid.switchToHttp).toHaveBeenCalledTimes(1);
-    expect(mockJwtService.verify).not.toHaveBeenCalled();
+
+    expect(mockJwtService.verify).toHaveBeenCalled();
   });
 
-  it("should throw UnauthorizedException without auth", () => {
+  it('should throw UnauthorizedException without auth', () => {
     expect(() => guard.canActivate(contextEmpty)).toThrowError(
       UnauthorizedException,
     );

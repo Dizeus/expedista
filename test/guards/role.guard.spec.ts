@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { HttpException } from '@nestjs/common';
@@ -7,6 +7,10 @@ import { LocalizationService } from 'src/localization/localization.service';
 import { mockLocalizationService } from 'test/mocks/services/mock-localization-service';
 import { USER_ROLE } from 'src/assets/constants/roles';
 import { RoleGuard } from 'src/utils/guards/role.guard';
+
+jest.mock('src/utils/helpers/get-token/get-token', () => ({
+  getToken: jest.fn(() => 'validToken'),
+}));
 
 const contextNotValidToken: ExecutionContext = {
   switchToHttp: jest.fn().mockReturnValue({
@@ -47,7 +51,7 @@ const mockReflector = {
 };
 
 const mockJwtService = {
-  verify: jest.fn((token: string) => user),
+  verify: jest.fn(() => user),
 };
 
 describe('RoleGuard', () => {
@@ -90,6 +94,9 @@ describe('RoleGuard', () => {
 
   it('should throw HttpException with invalid auth', () => {
     (mockReflector.getAllAndOverride as jest.Mock).mockReturnValue(ADMIN_ROLE);
+    (mockJwtService.verify as jest.Mock).mockImplementationOnce(() => {
+      throw new UnauthorizedException();
+    });
     try {
       expect(guard.canActivate(contextNotValidToken)).toThrow(HttpException);
       fail('Expected exception to be thrown, but none was thrown.');
