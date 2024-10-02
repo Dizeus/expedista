@@ -5,7 +5,7 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "assets": [
-      { "include": "assets/i18n/**/*", "watchAssets": true, "outDir": "dist/src" }
+      { "include": "assets/i18n/**/*", "watchAssets": true, "outDir": "dist" }
     ]
   }
 }

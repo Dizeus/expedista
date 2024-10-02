@@ -8,7 +8,7 @@ import { LocalizationObjects } from 'src/assets/types/enums/LocalizationObjects'
 export class LocalizationService {
   constructor(private readonly i18n: I18nService<I18nTranslations>) {}
 
-  translate(key: I18nPath, params: object[] = []): string {
+  translate(key: I18nPath, params?: object | object[]): string {
     return this.i18n.t(key, {
       lang: I18nContext.current()?.lang,
       args: params,

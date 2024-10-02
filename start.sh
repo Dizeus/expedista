@@ -10,6 +10,17 @@ VIOLET='\033[0;35m'
 NC='\033[0m' # No Color
 LINE="\n${VIOLET}--------------------------------------------------${NC}"
 
+# Check if Docker is installed
+if ! [ -x "$(command -v docker)" ]; then
+  echo -e "${RED}Error: Docker is not installed. Please install Docker to proceed.${NC}" >&2
+  exit 1
+fi
+
+# Check if Docker is running
+if ! docker info >/dev/null 2>&1; then
+  echo -e "${RED}Error: Docker is not running. Please start the Docker daemon.${NC}" >&2
+  exit 1
+fi
 
 #Export environment variables from .env file
 if [ "$1" = "production" ]; then

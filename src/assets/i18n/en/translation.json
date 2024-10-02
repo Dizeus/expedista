@@ -1,6 +1,7 @@
 {
   "validation": {
-    "length": "Length of {field} should be greater than {minLength}{maxLength ? 'and less than {maxLength}' : ''}",
+    "minLength": "Length of {0.field} should be greater than {1.minLength}",
+    "maxLength": "Length of {0.field} should be leass than {1.maxLength}",
     "isEmail": "Incorrect Email",
     "isString": "{field} must be a string"
   },

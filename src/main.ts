@@ -1,22 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { LocalizationService } from './localization/localization.service';
-const dotenv = require('dotenv');
-const dotenvExpand = require('dotenv-expand');
+import { AllExceptionsFilter } from './utils/filters/all-exception.filter';
+import { WinstonConfig } from './assets/configs/winston-logger.config';
+import { ValidationPipe } from './utils/pipes/validation.pipe';
+import * as dotenv from 'dotenv';
+import * as dotenvExpand from 'dotenv-expand';
 dotenvExpand.expand(dotenv.config());
 
 async function bootstrap() {
   const PORT = process.env.PORT || 6000;
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, WinstonConfig);
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: process.env.CLIENT_API_URL,
     credentials: true,
   });
-  console.log(process.env.NODE_ENV)
-  console.log(process.env.DATABASE_URL);
+
   const loacalization = app.get<LocalizationService>(LocalizationService);
-  await app.listen(PORT, () =>
-    console.log(`Server started on port = ${PORT}`),
-  );
+  app.useGlobalPipes(new ValidationPipe(loacalization));
+  app.useGlobalFilters(new AllExceptionsFilter(loacalization));
+  await app.listen(PORT, () => console.log(`Server started on port = ${PORT}`));
 }
 bootstrap();

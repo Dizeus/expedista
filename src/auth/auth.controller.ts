@@ -6,7 +6,7 @@ import { JwtAuthGuard } from '../utils/guards/jwt-auth.guard';
 import { IAuthRequest } from 'src/assets/types/IAuthRequest';
 import { IUserToken } from 'src/assets/types/IUserToken';
 
-@Controller('api/auth')
+@Controller('api')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
