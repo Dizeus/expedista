@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
-import { getToken } from '../helpers/get-token/get-token';
+import { getToken } from '../helpers/get-token';
 import { LocalizationService } from 'src/localization/localization.service';
 import { ITokenPayload } from 'src/assets/types/ITokenPayload';
 

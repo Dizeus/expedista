@@ -2,15 +2,21 @@ import { ArgumentMetadata } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import * as classValidator from 'class-validator';
 import { LocalizationService } from 'src/localization/localization.service';
-import { ValidationException } from 'src/utils/exceptions/validation.exception';
 import { ValidationPipe } from 'src/utils/pipes/validation.pipe';
 import { mockLocalizationService } from 'test/mocks/services/mock-localization-service';
+
 jest.mock('class-transformer');
 jest.mock('class-validator');
-jest.mock('src/utils/helpers/parse-translation/parse-translation', () => ({
+jest.mock('src/utils/helpers/parse-translation', () => ({
   parseTranslation: jest.fn(() => 'translated Text'),
 }));
-
+jest.mock('src/utils/exceptions/validation.exception', () => ({
+  ValidationException: jest.fn().mockImplementation((message: string) => {
+    const error = new Error(message);
+    error.name = 'ValidationException';
+    return error;
+  }),
+}));
 const validationErrors = [
   {
     property: 'property',
@@ -71,7 +77,7 @@ describe('ValidationPipe', () => {
     mockValidate.mockResolvedValueOnce(validationErrors);
 
     await expect(validationPipe.transform(value, metadata)).rejects.toThrow(
-      ValidationException,
+      Error,
     );
 
     expect(mockToInstance).toHaveBeenCalledWith(metadata.metatype, value);

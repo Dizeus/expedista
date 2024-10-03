@@ -9,7 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { ROLE_KEY, USER_ROLE } from 'src/assets/constants/roles';
-import { getToken } from '../helpers/get-token/get-token';
+import { getToken } from '../helpers/get-token';
 import { LocalizationService } from 'src/localization/localization.service';
 import { ITokenPayload } from 'src/assets/types/ITokenPayload';
 

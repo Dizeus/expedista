@@ -1,4 +1,5 @@
 import { WinstonModule } from 'nest-winston';
+import { formatInfo } from 'src/utils/helpers/format-info';
 import { transports, format } from 'winston';
 import 'winston-daily-rotate-file';
 
@@ -25,9 +26,7 @@ export const WinstonConfig = {
           format.cli(),
           format.splat(),
           format.timestamp(),
-          format.printf((info) => {
-            return `${info.timestamp} ${info.level}: ${info.message}`;
-          }),
+          format.printf(formatInfo),
         ),
       }),
     ],

@@ -38,7 +38,7 @@ const mockJwtService = {
   verify: jest.fn(() => {}),
 };
 
-jest.mock('src/utils/helpers/get-token/get-token', () => ({
+jest.mock('src/utils/helpers/get-token', () => ({
   getToken: jest.fn(() => 'validToken'),
 }));
 

@@ -1,6 +1,6 @@
 import { ValidationError } from 'class-validator';
 import { LocalizationService } from 'src/localization/localization.service';
-import { parseTranslation } from 'src/utils/helpers/parse-translation/parse-translation';
+import { parseTranslation } from 'src/utils/helpers/parse-translation';
 import { mockLocalizationService } from 'test/mocks/services/mock-localization-service';
 
 const ERROR: ValidationError = {

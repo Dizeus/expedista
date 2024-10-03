@@ -8,7 +8,7 @@ import { mockLocalizationService } from 'test/mocks/services/mock-localization-s
 import { USER_ROLE } from 'src/assets/constants/roles';
 import { RoleGuard } from 'src/utils/guards/role.guard';
 
-jest.mock('src/utils/helpers/get-token/get-token', () => ({
+jest.mock('src/utils/helpers/get-token', () => ({
   getToken: jest.fn(() => 'validToken'),
 }));
 

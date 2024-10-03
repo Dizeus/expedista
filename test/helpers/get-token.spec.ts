@@ -1,5 +1,5 @@
 import { UnauthorizedException } from '@nestjs/common';
-import { getToken } from 'src/utils/helpers/get-token/get-token';
+import { getToken } from 'src/utils/helpers/get-token';
 
 const VALID_TOKEN = 'Bearer validtoken';
 const INVALID_TOKEN = 'invalidtoken';

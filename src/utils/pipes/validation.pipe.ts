@@ -3,7 +3,7 @@ import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { ValidationException } from '../exceptions/validation.exception';
 import { LocalizationService } from 'src/localization/localization.service';
-import { parseTranslation } from '../helpers/parse-translation/parse-translation';
+import { parseTranslation } from '../helpers/parse-translation';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
