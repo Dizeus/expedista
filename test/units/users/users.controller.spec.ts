@@ -1,14 +1,14 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { JwtModule } from "@nestjs/jwt";
-import { UsersController } from "src/users/users.controller";
-import { UsersService } from "src/users/users.service";
-import { mockUsersService } from "test/mocks/services/mock-user-service";
-import { mockAuthRequest } from "test/mocks/mock-auth-request";
-import { MOCK_FILE } from "test/mocks/mock-file";
-import { JwtAuthGuard } from "src/utils/guards/jwt-auth.guard";
-import { mockJwtAuthGuard } from "test/mocks/guards/mock-jwt-auth-guard";
+import { Test, TestingModule } from '@nestjs/testing';
+import { JwtModule } from '@nestjs/jwt';
+import { UsersController } from 'src/users/users.controller';
+import { UsersService } from 'src/users/users.service';
+import { mockUsersService } from 'test/mocks/services/mock-user-service';
+import { mockAuthRequest } from 'test/mocks/mock-auth-request';
+import { MOCK_FILE } from 'test/mocks/mock-file';
+import { JwtAuthGuard } from 'src/utils/guards/jwt-auth.guard';
+import { mockJwtAuthGuard } from 'test/mocks/guards/mock-jwt-auth-guard';
 
-describe("UsersController", () => {
+describe('UsersController', () => {
   let controller: UsersController;
 
   beforeEach(async () => {
@@ -26,12 +26,12 @@ describe("UsersController", () => {
     controller = module.get<UsersController>(UsersController);
   });
 
-  it("UsersController should be defined", () => {
+  it('UsersController should be defined', () => {
     expect(controller).toBeDefined();
   });
 
   it('getAll - should return users by incoming pagination', () => {
-    controller.getAll(1, 20, 'hey')
+    controller.getAll(1, 20, 'hey');
 
     expect(mockUsersService.findAll).toHaveBeenCalledWith(1, 20, 'hey');
   });
@@ -41,8 +41,7 @@ describe("UsersController", () => {
     expect(mockUsersService.findAll).toHaveBeenCalledWith(1, 10, '');
   });
 
-  it("should set an Avatar", () => {
-
+  it('should set an Avatar', () => {
     controller.setAvatar(mockAuthRequest, MOCK_FILE);
 
     expect(mockUsersService.setAvatar).toHaveBeenCalledWith(
@@ -51,7 +50,7 @@ describe("UsersController", () => {
     );
   });
 
-  it("should delete self Account", () => {
+  it('should delete self Account', () => {
     controller.deleteSelf(mockAuthRequest);
     expect(mockUsersService.remove).toHaveBeenCalledWith(
       mockAuthRequest.user.id,

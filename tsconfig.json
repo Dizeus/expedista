@@ -25,5 +25,5 @@
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"
-, "test/unit/users/users.service.spec.ts", "test/unit/users/users.repository.spec.ts"  ]
+, "test/units/users/users.service.spec.ts", "test/units/users/users.repository.spec.ts"  ]
 }

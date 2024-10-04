@@ -53,6 +53,8 @@ describe('FilesService', () => {
       service.createFile(MOCK_FILE, FILE_PATH);
     }).toThrow(HttpException);
 
-    expect(mockLocalizationService.translate).toHaveBeenCalledWith(expect.any(String));
+    expect(mockLocalizationService.translate).toHaveBeenCalledWith(
+      expect.any(String),
+    );
   });
 });

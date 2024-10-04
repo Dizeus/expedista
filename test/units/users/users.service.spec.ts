@@ -114,10 +114,12 @@ describe('UsersService', () => {
       );
     }
   });
-  
+
   it('findOneByEmail - should find user by email', async () => {
     await service.findOneByEmail(mockClientUser.email);
-    expect(mockUserRepository.findOneByEmail).toHaveBeenCalledWith(mockClientUser.email);
+    expect(mockUserRepository.findOneByEmail).toHaveBeenCalledWith(
+      mockClientUser.email,
+    );
   });
 
   it('remove - should remove user', async () => {

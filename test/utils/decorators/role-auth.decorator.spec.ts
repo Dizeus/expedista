@@ -7,7 +7,7 @@ describe('Role Decorator', () => {
     const testRole = 'admin';
 
     class TestClass {
-      @Role(testRole) 
+      @Role(testRole)
       testMethod() {}
     }
 

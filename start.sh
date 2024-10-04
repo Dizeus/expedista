@@ -94,10 +94,11 @@ if [ ! "$(ls -A prisma/migrations 2>/dev/null)" ] || [ "$schema_time" -gt "$late
     npm run seed:deploy
   else
     npm run migrate:dev
+    npm run seed:dev
   fi
 else
   echo -e "${GREEN}\nMigration is up-to-date. Skipping migration step...${LINE}"
 fi
 
-echo -e "${YELLOW}\nStarting application...${LINE}"
+#echo -e "${YELLOW}\nStarting application...${LINE}"
 npm run start:dev

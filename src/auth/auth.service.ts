@@ -35,7 +35,6 @@ export class AuthService {
   async generateToken(user: IUser): Promise<IUserToken> {
     const payload: ITokenPayload = {
       id: user.id,
-      email: user.email,
       role: user.role,
     };
     return {
@@ -57,7 +56,7 @@ export class AuthService {
         HttpStatus.UNAUTHORIZED,
       );
     }
-    const { password, ...clientUser } = user;
+    const { password: _, ...clientUser } = user;
     return clientUser;
   }
 }
